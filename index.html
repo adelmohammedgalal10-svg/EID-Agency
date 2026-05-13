@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EID Agency — وكالة إيد للتسويق الرقمي</title>
+  <meta name="description" content="EID Agency — وكالة رقمية متكاملة تقدم خدمات التسويق الرقمي والتصميم والبرمجة بأعلى معايير الجودة" />
+
+  <!-- Google Fonts: Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class="dark-mode" data-theme="dark">
+
+  <!-- ============================================================
+       WELCOME GATE — Split Screen Overlay
+  ============================================================ -->
+  <div id="welcomeGate" class="welcome-gate" aria-modal="true" role="dialog" aria-label="بوابة الترحيب">
+    <!-- Left Panel — Branding -->
+    <div class="gate-left">
+      <div class="gate-left-inner">
+        <div class="gate-logo-wrap">
+          <img src="assets/images/eid-logo.png" alt="EID Agency Logo" class="gate-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+          <div class="gate-logo-fallback" style="display:none;">
+            <span class="logo-text-e">E</span><span class="logo-text-id">ID</span>
+          </div>
+        </div>
+        <h1 class="gate-headline">
+          <span class="gate-welcome">أهلاً</span>
+          <span class="gate-and">و</span>
+          <span class="gate-welcome2">سهلاً</span>
+        </h1>
+        <p class="gate-tagline">وكالتك الرقمية المتكاملة لتحقيق النجاح</p>
+        <div class="gate-decoration">
+          <div class="gate-orb gate-orb-1"></div>
+          <div class="gate-orb gate-orb-2"></div>
+          <div class="gate-orb gate-orb-3"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel — Name Input -->
+    <div class="gate-right">
+      <div class="gate-right-inner">
+        <div class="gate-form-header">
+          <div class="gate-icon-wrap">
+            <i class="fa-solid fa-hand-wave"></i>
+          </div>
+          <h2 class="gate-question">نتشرف باسمك؟</h2>
+          <p class="gate-sub">نحب نعرف مين الشخص المميز اللي هيتعامل معانا!</p>
+        </div>
+
+        <div class="gate-form">
+          <div class="gate-input-wrap">
+            <input
+              type="text"
+              id="guestName"
+              class="gate-input"
+              placeholder="اكتب اسمك هنا..."
+              autocomplete="given-name"
+              maxlength="50"
+              aria-label="أدخل اسمك"
+            />
+            <div class="gate-input-glow"></div>
+          </div>
+          <button id="gateStartBtn" class="gate-btn" type="button" aria-label="ابدأ الرحلة">
+            <span class="btn-text">ابدأ الرحلة</span>
+            <i class="fa-solid fa-arrow-left btn-icon"></i>
+            <div class="btn-ripple"></div>
+          </button>
+        </div>
+
+        <p class="gate-privacy">
+          <i class="fa-solid fa-shield-halved"></i>
+          معلوماتك محفوظة ولن تُشارك مع أي طرف آخر
+        </p>
+      </div>
+    </div>
+
+    <!-- Divider Line -->
+    <div class="gate-divider" aria-hidden="true"></div>
+  </div>
+
+  <!-- ============================================================
+       MAIN SITE WRAPPER (hidden until gate closes)
+  ============================================================ -->
+  <div id="mainSite" class="main-site" style="opacity:0; pointer-events:none;">
+
+    <!-- ============================================================
+         STICKY GLASSMORPHISM NAVBAR
+    ============================================================ -->
+    <header id="navbar" class="navbar" role="banner">
+      <div class="navbar-container">
+
+        <!-- Logo -->
+        <a href="#hero" class="navbar-logo" aria-label="EID Agency - الصفحة الرئيسية">
+          <img src="assets/images/eid-logo.png" alt="EID Agency" class="nav-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+          <div class="nav-logo-text" style="display:none;">
+            <span class="nlg-e">E</span><span class="nlg-id">ID</span>
+            <span class="nlg-agency">Agency</span>
+          </div>
+        </a>
+
+        <!-- Navigation Links -->
+        <nav class="navbar-nav" role="navigation" aria-label="التنقل الرئيسي">
+          <a href="#hero" class="nav-link active">الرئيسية</a>
+          <a href="#services" class="nav-link">خدماتنا</a>
+          <a href="#projects" class="nav-link">أعمالنا</a>
+          <a href="#pricing" class="nav-link">الباقات</a>
+          <a href="#contact" class="nav-link">تواصل معنا</a>
+        </nav>
+
+        <!-- Navbar Actions -->
+        <div class="navbar-actions">
+          <!-- Theme Toggle -->
+          <button id="themeToggle" class="theme-toggle" aria-label="تبديل المظهر" title="تبديل الوضع الليلي والنهاري">
+            <i class="fa-solid fa-moon" id="themeIcon"></i>
+          </button>
+
+          <!-- WhatsApp CTA -->
+          <a
+            href="https://wa.me/201014084157"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="nav-cta-btn"
+            aria-label="تواصل عبر واتساب"
+          >
+            <i class="fa-brands fa-whatsapp"></i>
+            <span>واتساب</span>
+          </a>
+
+          <!-- Mobile Hamburger -->
+          <button id="menuToggle" class="hamburger" aria-label="فتح القائمة" aria-expanded="false" aria-controls="mobileMenu">
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <nav id="mobileMenu" class="mobile-menu" role="navigation" aria-label="قائمة الجوال" aria-hidden="true">
+        <a href="#hero" class="mob-link">الرئيسية</a>
+        <a href="#services" class="mob-link">خدماتنا</a>
+        <a href="#projects" class="mob-link">أعمالنا</a>
+        <a href="#pricing" class="mob-link">الباقات</a>
+        <a href="#contact" class="mob-link">تواصل معنا</a>
+      </nav>
+    </header>
+
+    <!-- ============================================================
+         HERO SECTION
+    ============================================================ -->
+    <section id="hero" class="hero-section" aria-labelledby="heroTitle">
+      <!-- Animated Background -->
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-grid"></div>
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="hero-orb hero-orb-3"></div>
+        <div class="hero-noise"></div>
+      </div>
+
+      <div class="container">
+        <div class="hero-inner">
+          <!-- Badge -->
+          <div class="hero-badge reveal" data-delay="0">
+            <span class="badge-dot"></span>
+            <span>✨ وكالة رقمية متكاملة وموثوقة</span>
+          </div>
+
+          <!-- Main Greeting -->
+          <h1 id="heroTitle" class="hero-title reveal" data-delay="100">
+            <span class="hero-greet">مرحباً يا</span>
+            <span id="heroName" class="hero-name-display gradient-text">صديقنا العزيز</span>
+            <br />
+            <span class="hero-main">نحن هنا لنُحوّل</span>
+            <br />
+            <span class="hero-accent gradient-text">رؤيتك لواقع رقمي</span>
+          </h1>
+
+          <!-- Subheadline -->
+          <p class="hero-sub reveal" data-delay="200">
+            وكالة <strong>EID Agency</strong> متخصصة في تقديم حلول رقمية متكاملة تجمع بين الإبداع والتقنية
+            لتنمية أعمالك وتحقيق أهدافك التسويقية بأعلى مستوى من الاحترافية.
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="hero-actions reveal" data-delay="300">
+            <a
+              href="https://wa.me/201014084157?text=مرحباً، أريد الاستفسار عن خدماتكم"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary"
+              aria-label="تواصل معنا عبر واتساب"
+            >
+              <i class="fa-brands fa-whatsapp"></i>
+              <span>تواصل معنا الآن</span>
+            </a>
+            <a href="#services" class="btn-secondary">
+              <span>اكتشف خدماتنا</span>
+              <i class="fa-solid fa-arrow-left"></i>
+            </a>
+          </div>
+
+          <!-- Stats Strip -->
+          <div class="hero-stats reveal" data-delay="400">
+            <div class="stat-item">
+              <span class="stat-num" data-target="150">0</span>
+              <span class="stat-plus">+</span>
+              <span class="stat-label">مشروع منجز</span>
+            </div>
+            <div class="stat-divider" aria-hidden="true"></div>
+            <div class="stat-item">
+              <span class="stat-num" data-target="98">0</span>
+              <span class="stat-plus">%</span>
+              <span class="stat-label">رضا العملاء</span>
+            </div>
+            <div class="stat-divider" aria-hidden="true"></div>
+            <div class="stat-item">
+              <span class="stat-num" data-target="5">0</span>
+              <span class="stat-plus">+</span>
+              <span class="stat-label">سنوات خبرة</span>
+            </div>
+            <div class="stat-divider" aria-hidden="true"></div>
+            <div class="stat-item">
+              <span class="stat-num" data-target="24">0</span>
+              <span class="stat-slash">/</span>
+              <span class="stat-num2">7</span>
+              <span class="stat-label">دعم متواصل</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Visual / Floating Card -->
+        <div class="hero-visual reveal" data-delay="200" aria-hidden="true">
+          <div class="hero-card-float">
+            <div class="hcf-header">
+              <div class="hcf-dots">
+                <span class="dot dot-r"></span>
+                <span class="dot dot-y"></span>
+                <span class="dot dot-g"></span>
+              </div>
+              <span class="hcf-title">نتائج حملتك الإعلانية</span>
+            </div>
+            <div class="hcf-body">
+              <div class="hcf-chart" aria-label="رسم بياني لنمو الأداء">
+                <div class="chart-bar" style="--h:60%"><span>يناير</span></div>
+                <div class="chart-bar" style="--h:80%"><span>فبراير</span></div>
+                <div class="chart-bar" style="--h:55%"><span>مارس</span></div>
+                <div class="chart-bar active" style="--h:95%"><span>أبريل</span></div>
+                <div class="chart-bar" style="--h:75%"><span>مايو</span></div>
+              </div>
+              <div class="hcf-metrics">
+                <div class="hcf-metric">
+                  <i class="fa-solid fa-arrow-trend-up" style="color:#2dd4bf"></i>
+                  <span class="metric-val">+143%</span>
+                  <span class="metric-lbl">نمو في المبيعات</span>
+                </div>
+                <div class="hcf-metric">
+                  <i class="fa-solid fa-users" style="color:#8b5cf6"></i>
+                  <span class="metric-val">12,500</span>
+                  <span class="metric-lbl">متابع جديد</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating Badges around card -->
+          <div class="float-badge fb-1">
+            <i class="fa-brands fa-google"></i>
+            <span>Google Ads</span>
+          </div>
+          <div class="float-badge fb-2">
+            <i class="fa-solid fa-palette"></i>
+            <span>تصميم إبداعي</span>
+          </div>
+          <div class="float-badge fb-3">
+            <i class="fa-solid fa-code"></i>
+            <span>برمجة متقدمة</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div class="scroll-indicator" aria-hidden="true">
+        <span class="scroll-text">اسحب للأسفل</span>
+        <div class="scroll-mouse">
+          <div class="scroll-wheel"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SERVICES SECTION
+    ============================================================ -->
+    <section id="services" class="services-section" aria-labelledby="servicesTitle">
+      <div class="container">
+        <!-- Section Header -->
+        <div class="section-header reveal">
+          <div class="section-badge">
+            <i class="fa-solid fa-bolt"></i>
+            خدماتنا
+          </div>
+          <h2 id="servicesTitle" class="section-title">
+            كل ما تحتاجه لنجاح
+            <span class="gradient-text">أعمالك الرقمية</span>
+          </h2>
+          <p class="section-sub">
+            نقدم باقة متكاملة من الخدمات الرقمية المصممة خصيصاً لتحويل أعمالك إلى قوة تسويقية لا تُقاوم
+          </p>
+        </div>
+
+        <!-- Services Bento Grid (populated by JS) -->
+        <div id="servicesGrid" class="bento-grid services-grid" role="list" aria-label="قائمة الخدمات">
+          <!-- Loading Skeletons -->
+          <div class="bento-skeleton" aria-hidden="true"></div>
+          <div class="bento-skeleton" aria-hidden="true"></div>
+          <div class="bento-skeleton" aria-hidden="true"></div>
+          <div class="bento-skeleton" aria-hidden="true"></div>
+          <div class="bento-skeleton" aria-hidden="true"></div>
+          <div class="bento-skeleton" aria-hidden="true"></div>
+        </div>
+
+        <!-- Error State (hidden by default) -->
+        <div id="servicesError" class="fetch-error" style="display:none;" role="alert">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <p>حدث خطأ أثناء تحميل الخدمات. يرجى المحاولة مرة أخرى.</p>
+          <button class="retry-btn" onclick="fetchServices()">إعادة المحاولة</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PROJECTS SECTION
+    ============================================================ -->
+    <section id="projects" class="projects-section" aria-labelledby="projectsTitle">
+      <div class="container">
+        <!-- Section Header -->
+        <div class="section-header reveal">
+          <div class="section-badge">
+            <i class="fa-solid fa-star"></i>
+            أعمالنا
+          </div>
+          <h2 id="projectsTitle" class="section-title">
+            نماذج من
+            <span class="gradient-text">أحدث مشاريعنا</span>
+          </h2>
+          <p class="section-sub">
+            اكتشف كيف نحوّل الأفكار إلى تجارب رقمية استثنائية تفوق توقعات عملائنا
+          </p>
+        </div>
+
+        <!-- Projects Filter Tabs -->
+        <div class="projects-filter reveal" role="tablist" aria-label="تصفية المشاريع">
+          <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">الكل</button>
+        </div>
+
+        <!-- Projects Bento Grid (populated by JS) -->
+        <div id="projectsGrid" class="bento-grid projects-grid" role="list" aria-label="قائمة المشاريع">
+          <!-- Loading Skeletons -->
+          <div class="bento-skeleton bento-skeleton-tall" aria-hidden="true"></div>
+          <div class="bento-skeleton" aria-hidden="true"></div>
+          <div class="bento-skeleton" aria-hidden="true"></div>
+          <div class="bento-skeleton bento-skeleton-wide" aria-hidden="true"></div>
+        </div>
+
+        <!-- Error State -->
+        <div id="projectsError" class="fetch-error" style="display:none;" role="alert">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <p>حدث خطأ أثناء تحميل المشاريع. يرجى المحاولة مرة أخرى.</p>
+          <button class="retry-btn" onclick="fetchProjects()">إعادة المحاولة</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PRICING SECTION
+    ============================================================ -->
+    <section id="pricing" class="pricing-section" aria-labelledby="pricingTitle">
+      <!-- Background decoration -->
+      <div class="pricing-bg" aria-hidden="true">
+        <div class="pricing-orb pricing-orb-1"></div>
+        <div class="pricing-orb pricing-orb-2"></div>
+      </div>
+
+      <div class="container">
+        <!-- Section Header -->
+        <div class="section-header reveal">
+          <div class="section-badge">
+            <i class="fa-solid fa-tags"></i>
+            الباقات والأسعار
+          </div>
+          <h2 id="pricingTitle" class="section-title">
+            اختر الباقة
+            <span class="gradient-text">المناسبة لك</span>
+          </h2>
+          <p class="section-sub">
+            باقات مرنة تناسب جميع أحجام الأعمال، مع ضمان أعلى جودة وأفضل نتائج
+          </p>
+        </div>
+
+        <!-- Pricing Cards (populated by JS) -->
+        <div id="pricingGrid" class="pricing-grid" role="list" aria-label="باقات الأسعار">
+          <!-- Loading Skeletons -->
+          <div class="price-skeleton" aria-hidden="true"></div>
+          <div class="price-skeleton" aria-hidden="true"></div>
+          <div class="price-skeleton" aria-hidden="true"></div>
+        </div>
+
+        <!-- Error State -->
+        <div id="pricingError" class="fetch-error" style="display:none;" role="alert">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <p>حدث خطأ أثناء تحميل الباقات. يرجى المحاولة مرة أخرى.</p>
+          <button class="retry-btn" onclick="fetchPackages()">إعادة المحاولة</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         WHY US SECTION
+    ============================================================ -->
+    <section class="whyus-section" aria-labelledby="whyusTitle">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-badge">
+            <i class="fa-solid fa-trophy"></i>
+            لماذا نحن؟
+          </div>
+          <h2 id="whyusTitle" class="section-title">
+            ما يميّزنا عن
+            <span class="gradient-text">الجميع</span>
+          </h2>
+        </div>
+
+        <div class="whyus-grid">
+          <div class="whyus-card reveal" data-delay="0">
+            <div class="whyus-icon">
+              <i class="fa-solid fa-rocket"></i>
+            </div>
+            <h3>تسليم سريع</h3>
+            <p>نلتزم بالمواعيد المحددة ونقدم عملنا في الوقت المتفق عليه دون أي تأخير</p>
+          </div>
+          <div class="whyus-card reveal" data-delay="100">
+            <div class="whyus-icon">
+              <i class="fa-solid fa-gem"></i>
+            </div>
+            <h3>جودة استثنائية</h3>
+            <p>نضع معايير عالية لكل مشروع ونراجعه بدقة لضمان أعلى مستوى من الجودة</p>
+          </div>
+          <div class="whyus-card reveal" data-delay="200">
+            <div class="whyus-icon">
+              <i class="fa-solid fa-headset"></i>
+            </div>
+            <h3>دعم 24/7</h3>
+            <p>فريقنا متاح على مدار الساعة للإجابة على استفساراتك وحل أي مشكلة تواجهها</p>
+          </div>
+          <div class="whyus-card reveal" data-delay="300">
+            <div class="whyus-icon">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <h3>نتائج مضمونة</h3>
+            <p>نعمل بناءً على أهدافك ونقدم نتائج قابلة للقياس تثبت قيمة استثمارك</p>
+          </div>
+          <div class="whyus-card reveal" data-delay="400">
+            <div class="whyus-icon">
+              <i class="fa-solid fa-handshake"></i>
+            </div>
+            <h3>شراكة حقيقية</h3>
+            <p>لسنا مجرد مزودي خدمة، بل شركاء نجاح حقيقيون نهتم بنمو أعمالك</p>
+          </div>
+          <div class="whyus-card reveal" data-delay="500">
+            <div class="whyus-icon">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h3>سرية تامة</h3>
+            <p>نحافظ على سرية بياناتك ومعلومات مشروعك بشكل كامل ومضمون</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CONTACT SECTION
+    ============================================================ -->
+    <section id="contact" class="contact-section" aria-labelledby="contactTitle">
+      <div class="container">
+        <div class="contact-inner">
+          <!-- Left: Info -->
+          <div class="contact-info reveal" data-delay="0">
+            <div class="section-badge">
+              <i class="fa-solid fa-envelope"></i>
+              تواصل معنا
+            </div>
+            <h2 id="contactTitle" class="section-title">
+              لديك مشروع؟
+              <span class="gradient-text">نتكلم!</span>
+            </h2>
+            <p class="contact-desc">
+              سواء كان لديك فكرة، مشروع، أو مجرد استفسار — فريقنا مستعد للاستماع إليك
+              وتقديم الحل المثالي لأعمالك.
+            </p>
+
+            <!-- Contact Methods -->
+            <div class="contact-methods">
+              <a href="https://wa.me/201014084157" target="_blank" rel="noopener" class="contact-method">
+                <div class="cm-icon cm-wa">
+                  <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <div class="cm-info">
+                  <span class="cm-label">واتساب</span>
+                  <span class="cm-value" dir="ltr">+20 101 408 4157</span>
+                </div>
+                <i class="fa-solid fa-arrow-left cm-arrow"></i>
+              </a>
+
+              <a href="https://www.facebook.com/share/1CGeSRwAQy/" target="_blank" rel="noopener" class="contact-method">
+                <div class="cm-icon cm-fb">
+                  <i class="fa-brands fa-facebook-f"></i>
+                </div>
+                <div class="cm-info">
+                  <span class="cm-label">فيسبوك</span>
+                  <span class="cm-value">EID Agency</span>
+                </div>
+                <i class="fa-solid fa-arrow-left cm-arrow"></i>
+              </a>
+
+              <a href="https://www.instagram.com/gen.z966" target="_blank" rel="noopener" class="contact-method">
+                <div class="cm-icon cm-ig">
+                  <i class="fa-brands fa-instagram"></i>
+                </div>
+                <div class="cm-info">
+                  <span class="cm-label">إنستغرام</span>
+                  <span class="cm-value">@gen.z966</span>
+                </div>
+                <i class="fa-solid fa-arrow-left cm-arrow"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right: Form -->
+          <div class="contact-form-wrap reveal" data-delay="200">
+            <div class="contact-form-card glass">
+              <h3 class="form-title">أرسل رسالتك</h3>
+              <p class="form-subtitle">سنرد عليك في أقرب وقت ممكن</p>
+
+              <form id="contactForm" class="contact-form" novalidate aria-label="نموذج التواصل">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="contactName" class="form-label">
+                      <i class="fa-solid fa-user"></i> الاسم الكامل
+                    </label>
+                    <input
+                      type="text"
+                      id="contactName"
+                      name="name"
+                      class="form-input"
+                      placeholder="أدخل اسمك الكامل"
+                      required
+                      aria-required="true"
+                    />
+                    <span class="form-error" role="alert"></span>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="contactEmail" class="form-label">
+                      <i class="fa-solid fa-envelope"></i> البريد الإلكتروني
+                    </label>
+                    <input
+                      type="email"
+                      id="contactEmail"
+                      name="email"
+                      class="form-input"
+                      placeholder="example@email.com"
+                      dir="ltr"
+                      required
+                      aria-required="true"
+                    />
+                    <span class="form-error" role="alert"></span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="contactPhone" class="form-label">
+                    <i class="fa-solid fa-phone"></i> رقم الهاتف
+                  </label>
+                  <input
+                    type="tel"
+                    id="contactPhone"
+                    name="phone"
+                    class="form-input"
+                    placeholder="01xxxxxxxxx"
+                    dir="ltr"
+                    aria-required="true"
+                  />
+                  <span class="form-error" role="alert"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="contactMessage" class="form-label">
+                    <i class="fa-solid fa-message"></i> رسالتك
+                  </label>
+                  <textarea
+                    id="contactMessage"
+                    name="message"
+                    class="form-input form-textarea"
+                    placeholder="أخبرنا عن مشروعك أو استفسارك..."
+                    rows="5"
+                    required
+                    aria-required="true"
+                  ></textarea>
+                  <span class="form-error" role="alert"></span>
+                </div>
+
+                <button type="submit" class="form-submit-btn" id="contactSubmitBtn">
+                  <span class="submit-text">إرسال الرسالة</span>
+                  <i class="fa-solid fa-paper-plane submit-icon"></i>
+                  <div class="submit-loader" style="display:none;">
+                    <div class="loader-spinner"></div>
+                  </div>
+                </button>
+
+                <!-- Success / Error Alerts -->
+                <div id="formSuccess" class="form-alert form-alert-success" style="display:none;" role="status">
+                  <i class="fa-solid fa-circle-check"></i>
+                  <span>تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.</span>
+                </div>
+                <div id="formFailure" class="form-alert form-alert-error" style="display:none;" role="alert">
+                  <i class="fa-solid fa-circle-xmark"></i>
+                  <span>حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.</span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FOOTER
+    ============================================================ -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="footer-bg" aria-hidden="true">
+        <div class="footer-orb footer-orb-1"></div>
+        <div class="footer-orb footer-orb-2"></div>
+      </div>
+
+      <div class="container">
+        <div class="footer-top">
+          <!-- Brand Column -->
+          <div class="footer-col footer-brand">
+            <a href="#hero" class="footer-logo-link" aria-label="EID Agency">
+              <img src="assets/images/eid-logo.png" alt="EID Agency" class="footer-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+              <div class="footer-logo-text" style="display:none;">
+                <span class="flg-e">E</span><span class="flg-id">ID</span>
+              </div>
+            </a>
+            <p class="footer-brand-desc">
+              وكالة رقمية متكاملة نؤمن بأن كل فكرة تستحق أن تُرى.
+              نحوّل أعمالك إلى تجارب رقمية تُلهم وتبقى في الذاكرة.
+            </p>
+            <!-- Social Links -->
+            <div class="footer-socials" role="list" aria-label="روابط التواصل الاجتماعي">
+              <a
+                href="https://www.facebook.com/share/1CGeSRwAQy/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                role="listitem"
+                aria-label="فيسبوك"
+              >
+                <i class="fa-brands fa-facebook-f"></i>
+              </a>
+              <a
+                href="https://www.instagram.com/gen.z966?igsh=amk2OWs0d2U5YTY0"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                role="listitem"
+                aria-label="إنستغرام"
+              >
+                <i class="fa-brands fa-instagram"></i>
+              </a>
+              <a
+                href="https://www.tiktok.com/@gen_z966"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                role="listitem"
+                aria-label="تيك توك"
+              >
+                <i class="fa-brands fa-tiktok"></i>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/adel-galal-025112387"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                role="listitem"
+                aria-label="لينكدإن"
+              >
+                <i class="fa-brands fa-linkedin-in"></i>
+              </a>
+              <a
+                href="https://wa.me/201014084157"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                role="listitem"
+                aria-label="واتساب"
+              >
+                <i class="fa-brands fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="footer-col">
+            <h4 class="footer-col-title">روابط سريعة</h4>
+            <ul class="footer-links" role="list">
+              <li><a href="#hero" class="footer-link">الرئيسية</a></li>
+              <li><a href="#services" class="footer-link">خدماتنا</a></li>
+              <li><a href="#projects" class="footer-link">أعمالنا</a></li>
+              <li><a href="#pricing" class="footer-link">الباقات والأسعار</a></li>
+              <li><a href="#contact" class="footer-link">تواصل معنا</a></li>
+            </ul>
+          </div>
+
+          <!-- Services Links -->
+          <div class="footer-col">
+            <h4 class="footer-col-title">خدماتنا</h4>
+            <ul class="footer-links" role="list">
+              <li><a href="#services" class="footer-link">إدارة السوشيال ميديا</a></li>
+              <li><a href="#services" class="footer-link">تصميم الجرافيك</a></li>
+              <li><a href="#services" class="footer-link">برمجة المواقع والتطبيقات</a></li>
+              <li><a href="#services" class="footer-link">الإعلانات المدفوعة</a></li>
+              <li><a href="#services" class="footer-link">تحسين محركات البحث</a></li>
+            </ul>
+          </div>
+
+          <!-- Contact Info -->
+          <div class="footer-col">
+            <h4 class="footer-col-title">معلومات التواصل</h4>
+            <div class="footer-contact-info">
+              <div class="fci-item">
+                <i class="fa-brands fa-whatsapp fci-icon" style="color:#25d366"></i>
+                <a href="https://wa.me/201014084157" class="fci-text" dir="ltr">+20 101 408 4157</a>
+              </div>
+              <div class="fci-item">
+                <i class="fa-solid fa-map-marker-alt fci-icon" style="color:#2dd4bf"></i>
+                <span class="fci-text">مصر — متاحون للعمل عن بُعد عالمياً</span>
+              </div>
+              <div class="fci-item">
+                <i class="fa-solid fa-clock fci-icon" style="color:#8b5cf6"></i>
+                <span class="fci-text">متاحون 24 ساعة / 7 أيام</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+          <div class="footer-bottom-inner">
+            <p class="footer-copyright">
+              © 2026 <strong>EID Agency</strong> — جميع الحقوق محفوظة لـ <strong>عادل محمد جلال</strong>
+            </p>
+            <p class="footer-made">
+              صُنع بـ <i class="fa-solid fa-heart" style="color:#ef4444"></i> في مصر
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /mainSite -->
+
+  <!-- ============================================================
+       PROJECT LIGHTBOX MODAL
+  ============================================================ -->
+  <div id="lightbox" class="lightbox" style="display:none;" role="dialog" aria-modal="true" aria-label="تفاصيل المشروع">
+    <div class="lightbox-overlay" id="lightboxOverlay"></div>
+    <div class="lightbox-content glass">
+      <button class="lightbox-close" id="lightboxClose" aria-label="إغلاق">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div id="lightboxInner" class="lightbox-inner">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="back-to-top" aria-label="العودة للأعلى" style="opacity:0; pointer-events:none;">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <!-- Main Script -->
+  <script src="assets/js/script.js"></script>
+</body>
+</html>

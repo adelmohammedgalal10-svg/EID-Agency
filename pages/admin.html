@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة التحكم — EID Agency</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Google Fonts: Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Admin Stylesheet -->
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+</head>
+<body class="admin-body" data-theme="dark">
+
+  <!-- ============================================================
+       LOGIN MODAL OVERLAY
+  ============================================================ -->
+  <div id="loginOverlay" class="login-overlay" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <div class="login-bg" aria-hidden="true">
+      <div class="login-orb login-orb-1"></div>
+      <div class="login-orb login-orb-2"></div>
+      <div class="login-orb login-orb-3"></div>
+      <div class="login-grid"></div>
+    </div>
+
+    <div class="login-card glass">
+      <!-- Logo -->
+      <div class="login-logo-wrap">
+        <img src="../assets/images/eid-logo.png" alt="EID Agency" class="login-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+        <div class="login-logo-fallback" style="display:none;">
+          <span class="llf-e">E</span><span class="llf-id">ID</span>
+        </div>
+      </div>
+
+      <div class="login-header">
+        <h1 id="loginTitle" class="login-title">لوحة التحكم</h1>
+        <p class="login-subtitle">أدخل بيانات الدخول للمتابعة</p>
+      </div>
+
+      <form id="loginForm" class="login-form" novalidate aria-label="نموذج تسجيل الدخول">
+        <!-- Username -->
+        <div class="login-field">
+          <label for="loginUsername" class="login-label">
+            <i class="fa-solid fa-user"></i>
+            اسم المستخدم
+          </label>
+          <div class="login-input-wrap">
+            <input
+              type="text"
+              id="loginUsername"
+              name="username"
+              class="login-input"
+              placeholder="أدخل اسم المستخدم"
+              required
+              autocomplete="username"
+              aria-required="true"
+            />
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="login-field">
+          <label for="loginPassword" class="login-label">
+            <i class="fa-solid fa-lock"></i>
+            كلمة المرور
+          </label>
+          <div class="login-input-wrap login-pass-wrap">
+            <input
+              type="password"
+              id="loginPassword"
+              name="password"
+              class="login-input"
+              placeholder="أدخل كلمة المرور"
+              required
+              autocomplete="current-password"
+              aria-required="true"
+            />
+            <button type="button" class="toggle-pass" id="togglePass" aria-label="إظهار كلمة المرور">
+              <i class="fa-solid fa-eye" id="passEyeIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Error Alert -->
+        <div id="loginError" class="login-error" style="display:none;" role="alert">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <span id="loginErrorText">بيانات الدخول غير صحيحة. يرجى المحاولة مرة أخرى.</span>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="login-btn" id="loginBtn">
+          <span class="login-btn-text">تسجيل الدخول</span>
+          <i class="fa-solid fa-arrow-left login-btn-icon"></i>
+          <div class="login-btn-loader" style="display:none;">
+            <div class="mini-spinner"></div>
+          </div>
+        </button>
+      </form>
+
+      <p class="login-footer-note">
+        <i class="fa-solid fa-shield-halved"></i>
+        هذه المنطقة مخصصة للمشرفين فقط
+      </p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MAIN ADMIN DASHBOARD (hidden until authenticated)
+  ============================================================ -->
+  <div id="adminApp" class="admin-app" style="display:none;">
+
+    <!-- ==============================
+         RIGHT SIDEBAR
+    ============================== -->
+    <aside id="adminSidebar" class="admin-sidebar" role="navigation" aria-label="قائمة لوحة التحكم">
+
+      <!-- Sidebar Header / Logo -->
+      <div class="sidebar-header">
+        <a href="#" class="sidebar-logo-link" aria-label="EID Agency Dashboard">
+          <img src="../assets/images/eid-logo.png" alt="EID Agency" class="sidebar-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+          <div class="sidebar-logo-text" style="display:none;">
+            <span class="slt-e">E</span><span class="slt-id">ID</span>
+          </div>
+        </a>
+        <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" aria-label="طي القائمة">
+          <i class="fa-solid fa-angles-right"></i>
+        </button>
+      </div>
+
+      <!-- Admin Profile Mini -->
+      <div class="sidebar-profile">
+        <div class="sp-avatar">
+          <i class="fa-solid fa-user-tie"></i>
+        </div>
+        <div class="sp-info">
+          <span class="sp-name">عادل محمد جلال</span>
+          <span class="sp-role">
+            <i class="fa-solid fa-circle sp-dot"></i>
+            مشرف رئيسي
+          </span>
+        </div>
+      </div>
+
+      <!-- Sidebar Divider -->
+      <div class="sidebar-divider" aria-hidden="true"></div>
+
+      <!-- Navigation Menu -->
+      <nav class="sidebar-nav" role="menubar" aria-label="أقسام لوحة التحكم">
+
+        <div class="sidebar-nav-group">
+          <span class="nav-group-label">الرئيسية</span>
+          <button
+            class="sidebar-nav-item active"
+            data-section="overview"
+            role="menuitem"
+            aria-current="page"
+            aria-label="نظرة عامة"
+          >
+            <div class="nav-item-icon">
+              <i class="fa-solid fa-gauge-high"></i>
+            </div>
+            <span class="nav-item-label">نظرة عامة</span>
+            <div class="nav-item-indicator"></div>
+          </button>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="nav-group-label">إدارة المحتوى</span>
+
+          <button
+            class="sidebar-nav-item"
+            data-section="services"
+            role="menuitem"
+            aria-label="إدارة الخدمات"
+          >
+            <div class="nav-item-icon">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <span class="nav-item-label">الخدمات</span>
+            <span class="nav-item-badge" id="servicesBadge">—</span>
+            <div class="nav-item-indicator"></div>
+          </button>
+
+          <button
+            class="sidebar-nav-item"
+            data-section="projects"
+            role="menuitem"
+            aria-label="إدارة المشاريع"
+          >
+            <div class="nav-item-icon">
+              <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <span class="nav-item-label">المشاريع</span>
+            <span class="nav-item-badge" id="projectsBadge">—</span>
+            <div class="nav-item-indicator"></div>
+          </button>
+
+          <button
+            class="sidebar-nav-item"
+            data-section="packages"
+            role="menuitem"
+            aria-label="إدارة الباقات"
+          >
+            <div class="nav-item-icon">
+              <i class="fa-solid fa-tags"></i>
+            </div>
+            <span class="nav-item-label">الباقات والأسعار</span>
+            <span class="nav-item-badge" id="packagesBadge">—</span>
+            <div class="nav-item-indicator"></div>
+          </button>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="nav-group-label">التفاعل</span>
+
+          <button
+            class="sidebar-nav-item"
+            data-section="inquiries"
+            role="menuitem"
+            aria-label="الاستفسارات"
+          >
+            <div class="nav-item-icon">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <span class="nav-item-label">الاستفسارات</span>
+            <span class="nav-item-badge new-badge" id="inquiriesBadge">—</span>
+            <div class="nav-item-indicator"></div>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <a href="../index.html" target="_blank" class="sidebar-view-site" rel="noopener">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          <span>معاينة الموقع</span>
+        </a>
+        <button id="adminLogout" class="sidebar-logout" aria-label="تسجيل الخروج">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>تسجيل الخروج</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Mobile Sidebar Toggle (top bar on mobile) -->
+    <div class="admin-topbar-mobile">
+      <button class="mob-menu-toggle" id="mobMenuToggle" aria-label="فتح القائمة">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <span class="mob-page-title" id="mobPageTitle">نظرة عامة</span>
+      <button id="adminLogoutMob" class="mob-logout-btn" aria-label="تسجيل الخروج">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
+    </div>
+    <div class="sidebar-mob-overlay" id="sidebarMobOverlay" aria-hidden="true"></div>
+
+    <!-- ==============================
+         MAIN CONTENT AREA
+    ============================== -->
+    <main id="adminContent" class="admin-content" role="main">
+
+      <!-- Content Top Bar -->
+      <div class="content-topbar">
+        <div class="topbar-left">
+          <h2 class="topbar-title" id="contentTitle">نظرة عامة</h2>
+          <div class="topbar-breadcrumb" id="topbarBreadcrumb">
+            <span>لوحة التحكم</span>
+            <i class="fa-solid fa-chevron-left bc-sep"></i>
+            <span id="breadcrumbCurrent">نظرة عامة</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <button class="topbar-theme-toggle" id="adminThemeToggle" aria-label="تبديل المظهر">
+            <i class="fa-solid fa-moon" id="adminThemeIcon"></i>
+          </button>
+          <div class="topbar-time" id="topbarTime" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           SECTION: OVERVIEW
+      ========================================== -->
+      <section id="sectionOverview" class="admin-section active" aria-labelledby="overviewHeading">
+        <h3 id="overviewHeading" class="sr-only">نظرة عامة على لوحة التحكم</h3>
+
+        <!-- Stats Cards Row -->
+        <div class="overview-stats" role="list" aria-label="إحصائيات سريعة">
+          <div class="stat-card" role="listitem">
+            <div class="stat-card-icon sc-teal">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <div class="stat-card-info">
+              <span class="sc-label">الخدمات</span>
+              <span class="sc-value" id="ovServiceCount">—</span>
+              <span class="sc-sub">خدمة نشطة</span>
+            </div>
+            <div class="stat-card-trend up">
+              <i class="fa-solid fa-arrow-trend-up"></i>
+            </div>
+          </div>
+
+          <div class="stat-card" role="listitem">
+            <div class="stat-card-icon sc-purple">
+              <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <div class="stat-card-info">
+              <span class="sc-label">المشاريع</span>
+              <span class="sc-value" id="ovProjectCount">—</span>
+              <span class="sc-sub">مشروع مكتمل</span>
+            </div>
+            <div class="stat-card-trend up">
+              <i class="fa-solid fa-arrow-trend-up"></i>
+            </div>
+          </div>
+
+          <div class="stat-card" role="listitem">
+            <div class="stat-card-icon sc-blue">
+              <i class="fa-solid fa-tags"></i>
+            </div>
+            <div class="stat-card-info">
+              <span class="sc-label">الباقات</span>
+              <span class="sc-value" id="ovPackageCount">—</span>
+              <span class="sc-sub">باقة متاحة</span>
+            </div>
+            <div class="stat-card-trend neutral">
+              <i class="fa-solid fa-minus"></i>
+            </div>
+          </div>
+
+          <div class="stat-card" role="listitem">
+            <div class="stat-card-icon sc-orange">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <div class="stat-card-info">
+              <span class="sc-label">الاستفسارات</span>
+              <span class="sc-value" id="ovInquiryCount">—</span>
+              <span class="sc-sub">رسالة واردة</span>
+            </div>
+            <div class="stat-card-trend up">
+              <i class="fa-solid fa-arrow-trend-up"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Overview Bottom Grid -->
+        <div class="overview-bottom">
+          <!-- Recent Inquiries Preview -->
+          <div class="overview-card glass">
+            <div class="ov-card-header">
+              <h4 class="ov-card-title">
+                <i class="fa-solid fa-envelope-open-text"></i>
+                آخر الاستفسارات
+              </h4>
+              <button class="ov-card-action" data-section="inquiries">عرض الكل</button>
+            </div>
+            <div id="ovRecentInquiries" class="ov-recent-list">
+              <div class="ov-loading">
+                <div class="mini-spinner"></div>
+                <span>جاري التحميل...</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="overview-card glass">
+            <div class="ov-card-header">
+              <h4 class="ov-card-title">
+                <i class="fa-solid fa-zap"></i>
+                إجراءات سريعة
+              </h4>
+            </div>
+            <div class="quick-actions-grid">
+              <button class="quick-action-btn" data-section="services" data-action="add">
+                <div class="qa-icon qa-teal">
+                  <i class="fa-solid fa-plus"></i>
+                </div>
+                <span>إضافة خدمة</span>
+              </button>
+              <button class="quick-action-btn" data-section="projects" data-action="add">
+                <div class="qa-icon qa-purple">
+                  <i class="fa-solid fa-plus"></i>
+                </div>
+                <span>إضافة مشروع</span>
+              </button>
+              <button class="quick-action-btn" data-section="packages" data-action="add">
+                <div class="qa-icon qa-blue">
+                  <i class="fa-solid fa-plus"></i>
+                </div>
+                <span>إضافة باقة</span>
+              </button>
+              <button class="quick-action-btn" data-section="inquiries">
+                <div class="qa-icon qa-orange">
+                  <i class="fa-solid fa-inbox"></i>
+                </div>
+                <span>عرض الرسائل</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Site Health Card -->
+          <div class="overview-card glass overview-health">
+            <div class="ov-card-header">
+              <h4 class="ov-card-title">
+                <i class="fa-solid fa-server"></i>
+                حالة الخادم
+              </h4>
+            </div>
+            <div class="health-indicators">
+              <div class="health-item">
+                <div class="health-dot online" aria-label="يعمل"></div>
+                <span class="health-label">واجهة برمجة التطبيقات (API)</span>
+                <span class="health-status online-text" id="apiHealthStatus">جاري الفحص...</span>
+              </div>
+              <div class="health-item">
+                <div class="health-dot online"></div>
+                <span class="health-label">قاعدة البيانات</span>
+                <span class="health-status online-text">متصلة</span>
+              </div>
+              <div class="health-item">
+                <div class="health-dot online"></div>
+                <span class="health-label">تخزين الصور</span>
+                <span class="health-status online-text">يعمل</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SECTION: SERVICES
+      ========================================== -->
+      <section id="sectionServices" class="admin-section" aria-labelledby="servicesAdminHeading" style="display:none;">
+        <h3 id="servicesAdminHeading" class="sr-only">إدارة الخدمات</h3>
+
+        <!-- Section Toolbar -->
+        <div class="section-toolbar">
+          <div class="toolbar-left">
+            <h3 class="section-h3">
+              <i class="fa-solid fa-bolt"></i>
+              إدارة الخدمات
+            </h3>
+            <span class="section-count" id="servicesCount">0 خدمة</span>
+          </div>
+          <button class="add-btn" id="addServiceBtn" aria-label="إضافة خدمة جديدة">
+            <i class="fa-solid fa-plus"></i>
+            <span>إضافة خدمة</span>
+          </button>
+        </div>
+
+        <!-- Services Table -->
+        <div class="table-wrap glass">
+          <div class="table-search-row">
+            <div class="table-search">
+              <i class="fa-solid fa-search"></i>
+              <input type="search" id="servicesSearch" class="table-search-input" placeholder="ابحث في الخدمات..." aria-label="بحث في الخدمات" />
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table" role="table" aria-label="جدول الخدمات">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">الصورة</th>
+                  <th scope="col">اسم الخدمة</th>
+                  <th scope="col">الوصف</th>
+                  <th scope="col">الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="servicesTableBody">
+                <tr>
+                  <td colspan="5" class="table-loading">
+                    <div class="mini-spinner"></div>
+                    <span>جاري تحميل الخدمات...</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SECTION: PROJECTS
+      ========================================== -->
+      <section id="sectionProjects" class="admin-section" aria-labelledby="projectsAdminHeading" style="display:none;">
+        <h3 id="projectsAdminHeading" class="sr-only">إدارة المشاريع</h3>
+
+        <!-- Section Toolbar -->
+        <div class="section-toolbar">
+          <div class="toolbar-left">
+            <h3 class="section-h3">
+              <i class="fa-solid fa-layer-group"></i>
+              إدارة المشاريع
+            </h3>
+            <span class="section-count" id="projectsCount">0 مشروع</span>
+          </div>
+          <button class="add-btn" id="addProjectBtn" aria-label="إضافة مشروع جديد">
+            <i class="fa-solid fa-plus"></i>
+            <span>إضافة مشروع</span>
+          </button>
+        </div>
+
+        <!-- Projects Table -->
+        <div class="table-wrap glass">
+          <div class="table-search-row">
+            <div class="table-search">
+              <i class="fa-solid fa-search"></i>
+              <input type="search" id="projectsSearch" class="table-search-input" placeholder="ابحث في المشاريع..." aria-label="بحث في المشاريع" />
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table" role="table" aria-label="جدول المشاريع">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">الصورة</th>
+                  <th scope="col">اسم المشروع</th>
+                  <th scope="col">الخدمة المرتبطة</th>
+                  <th scope="col">الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="projectsTableBody">
+                <tr>
+                  <td colspan="5" class="table-loading">
+                    <div class="mini-spinner"></div>
+                    <span>جاري تحميل المشاريع...</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SECTION: PACKAGES
+      ========================================== -->
+      <section id="sectionPackages" class="admin-section" aria-labelledby="packagesAdminHeading" style="display:none;">
+        <h3 id="packagesAdminHeading" class="sr-only">إدارة الباقات</h3>
+
+        <!-- Section Toolbar -->
+        <div class="section-toolbar">
+          <div class="toolbar-left">
+            <h3 class="section-h3">
+              <i class="fa-solid fa-tags"></i>
+              إدارة الباقات والأسعار
+            </h3>
+            <span class="section-count" id="packagesCount">0 باقة</span>
+          </div>
+          <button class="add-btn" id="addPackageBtn" aria-label="إضافة باقة جديدة">
+            <i class="fa-solid fa-plus"></i>
+            <span>إضافة باقة</span>
+          </button>
+        </div>
+
+        <!-- Packages Table -->
+        <div class="table-wrap glass">
+          <div class="table-responsive">
+            <table class="admin-table" role="table" aria-label="جدول الباقات">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">اسم الباقة</th>
+                  <th scope="col">السعر</th>
+                  <th scope="col">المميزات</th>
+                  <th scope="col">الأكثر طلباً</th>
+                  <th scope="col">الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="packagesTableBody">
+                <tr>
+                  <td colspan="6" class="table-loading">
+                    <div class="mini-spinner"></div>
+                    <span>جاري تحميل الباقات...</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SECTION: INQUIRIES
+      ========================================== -->
+      <section id="sectionInquiries" class="admin-section" aria-labelledby="inquiriesAdminHeading" style="display:none;">
+        <h3 id="inquiriesAdminHeading" class="sr-only">الاستفسارات الواردة</h3>
+
+        <!-- Section Toolbar -->
+        <div class="section-toolbar">
+          <div class="toolbar-left">
+            <h3 class="section-h3">
+              <i class="fa-solid fa-envelope"></i>
+              الاستفسارات الواردة
+            </h3>
+            <span class="section-count" id="inquiriesCount">0 رسالة</span>
+          </div>
+          <div class="toolbar-right">
+            <button class="filter-btn active" data-filter="all">الكل</button>
+            <button class="filter-btn" data-filter="new">جديد</button>
+          </div>
+        </div>
+
+        <!-- Inquiries Table -->
+        <div class="table-wrap glass">
+          <div class="table-search-row">
+            <div class="table-search">
+              <i class="fa-solid fa-search"></i>
+              <input type="search" id="inquiriesSearch" class="table-search-input" placeholder="ابحث في الاستفسارات..." aria-label="بحث في الاستفسارات" />
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table" role="table" aria-label="جدول الاستفسارات">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">الاسم</th>
+                  <th scope="col">البريد الإلكتروني</th>
+                  <th scope="col">الهاتف</th>
+                  <th scope="col">الرسالة</th>
+                  <th scope="col">التاريخ</th>
+                  <th scope="col">الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="inquiriesTableBody">
+                <tr>
+                  <td colspan="7" class="table-loading">
+                    <div class="mini-spinner"></div>
+                    <span>جاري تحميل الاستفسارات...</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main><!-- /adminContent -->
+  </div><!-- /adminApp -->
+
+  <!-- ============================================================
+       MODAL: Add / Edit Service
+  ============================================================ -->
+  <div id="serviceModal" class="admin-modal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle">
+    <div class="modal-overlay" data-close-modal="serviceModal"></div>
+    <div class="modal-box glass">
+      <div class="modal-header">
+        <h3 class="modal-title" id="serviceModalTitle">إضافة خدمة جديدة</h3>
+        <button class="modal-close-btn" data-close-modal="serviceModal" aria-label="إغلاق">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="serviceForm" class="modal-form" enctype="multipart/form-data" novalidate aria-label="نموذج الخدمة">
+        <input type="hidden" id="serviceId" name="id" value="" />
+
+        <div class="modal-field">
+          <label for="serviceTitle" class="modal-label">
+            <i class="fa-solid fa-heading"></i>
+            اسم الخدمة <span class="required-star">*</span>
+          </label>
+          <input
+            type="text"
+            id="serviceTitle"
+            name="title"
+            class="modal-input"
+            placeholder="مثال: إدارة السوشيال ميديا"
+            required
+            aria-required="true"
+          />
+          <span class="modal-error" role="alert"></span>
+        </div>
+
+        <div class="modal-field">
+          <label for="serviceDescription" class="modal-label">
+            <i class="fa-solid fa-align-right"></i>
+            وصف الخدمة <span class="required-star">*</span>
+          </label>
+          <textarea
+            id="serviceDescription"
+            name="description"
+            class="modal-input modal-textarea"
+            placeholder="اكتب وصفاً دقيقاً للخدمة..."
+            rows="4"
+            required
+            aria-required="true"
+          ></textarea>
+          <span class="modal-error" role="alert"></span>
+        </div>
+
+        <!-- Image Upload (CRITICAL) -->
+        <div class="modal-field">
+          <label for="serviceImage" class="modal-label">
+            <i class="fa-solid fa-image"></i>
+            صورة الخدمة
+          </label>
+          <div class="file-upload-area" id="serviceImageUploadArea" role="button" tabindex="0" aria-label="رفع صورة الخدمة">
+            <input
+              type="file"
+              id="serviceImage"
+              name="image"
+              class="file-upload-input"
+              accept="image/*"
+              aria-label="اختر صورة للخدمة"
+            />
+            <div class="file-upload-placeholder" id="serviceUploadPlaceholder">
+              <i class="fa-solid fa-cloud-arrow-up fup-icon"></i>
+              <span class="fup-text">اسحب الصورة هنا أو اضغط للاختيار</span>
+              <span class="fup-hint">PNG, JPG, WEBP — حد أقصى 5MB</span>
+            </div>
+            <div class="file-upload-preview" id="serviceUploadPreview" style="display:none;">
+              <img id="servicePreviewImg" src="" alt="معاينة الصورة" class="preview-img" />
+              <button type="button" class="preview-remove-btn" id="serviceRemoveImg" aria-label="إزالة الصورة">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="modal-cancel-btn" data-close-modal="serviceModal">إلغاء</button>
+          <button type="submit" class="modal-save-btn" id="serviceSubmitBtn">
+            <span class="msb-text">حفظ الخدمة</span>
+            <div class="msb-loader" style="display:none;"><div class="mini-spinner"></div></div>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL: Add / Edit Project
+  ============================================================ -->
+  <div id="projectModal" class="admin-modal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
+    <div class="modal-overlay" data-close-modal="projectModal"></div>
+    <div class="modal-box glass">
+      <div class="modal-header">
+        <h3 class="modal-title" id="projectModalTitle">إضافة مشروع جديد</h3>
+        <button class="modal-close-btn" data-close-modal="projectModal" aria-label="إغلاق">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="projectForm" class="modal-form" enctype="multipart/form-data" novalidate aria-label="نموذج المشروع">
+        <input type="hidden" id="projectId" name="id" value="" />
+
+        <div class="modal-field">
+          <label for="projectTitle" class="modal-label">
+            <i class="fa-solid fa-heading"></i>
+            اسم المشروع <span class="required-star">*</span>
+          </label>
+          <input
+            type="text"
+            id="projectTitle"
+            name="title"
+            class="modal-input"
+            placeholder="مثال: موقع شركة الفجر للعقارات"
+            required
+            aria-required="true"
+          />
+          <span class="modal-error" role="alert"></span>
+        </div>
+
+        <div class="modal-field">
+          <label for="projectService" class="modal-label">
+            <i class="fa-solid fa-bolt"></i>
+            الخدمة المرتبطة <span class="required-star">*</span>
+          </label>
+          <select
+            id="projectService"
+            name="service_id"
+            class="modal-input modal-select"
+            required
+            aria-required="true"
+          >
+            <option value="">-- اختر الخدمة --</option>
+            <!-- Populated dynamically by JS -->
+          </select>
+          <span class="modal-error" role="alert"></span>
+        </div>
+
+        <!-- Image Upload (CRITICAL) -->
+        <div class="modal-field">
+          <label for="projectImage" class="modal-label">
+            <i class="fa-solid fa-image"></i>
+            صورة المشروع
+          </label>
+          <div class="file-upload-area" id="projectImageUploadArea" role="button" tabindex="0" aria-label="رفع صورة المشروع">
+            <input
+              type="file"
+              id="projectImage"
+              name="image"
+              class="file-upload-input"
+              accept="image/*"
+              aria-label="اختر صورة للمشروع"
+            />
+            <div class="file-upload-placeholder" id="projectUploadPlaceholder">
+              <i class="fa-solid fa-cloud-arrow-up fup-icon"></i>
+              <span class="fup-text">اسحب الصورة هنا أو اضغط للاختيار</span>
+              <span class="fup-hint">PNG, JPG, WEBP — حد أقصى 5MB</span>
+            </div>
+            <div class="file-upload-preview" id="projectUploadPreview" style="display:none;">
+              <img id="projectPreviewImg" src="" alt="معاينة الصورة" class="preview-img" />
+              <button type="button" class="preview-remove-btn" id="projectRemoveImg" aria-label="إزالة الصورة">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="modal-cancel-btn" data-close-modal="projectModal">إلغاء</button>
+          <button type="submit" class="modal-save-btn" id="projectSubmitBtn">
+            <span class="msb-text">حفظ المشروع</span>
+            <div class="msb-loader" style="display:none;"><div class="mini-spinner"></div></div>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL: Add / Edit Package
+  ============================================================ -->
+  <div id="packageModal" class="admin-modal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="packageModalTitle">
+    <div class="modal-overlay" data-close-modal="packageModal"></div>
+    <div class="modal-box glass">
+      <div class="modal-header">
+        <h3 class="modal-title" id="packageModalTitle">إضافة باقة جديدة</h3>
+        <button class="modal-close-btn" data-close-modal="packageModal" aria-label="إغلاق">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="packageForm" class="modal-form" novalidate aria-label="نموذج الباقة">
+        <input type="hidden" id="packageId" name="id" value="" />
+
+        <div class="form-row-2">
+          <div class="modal-field">
+            <label for="packageTitle" class="modal-label">
+              <i class="fa-solid fa-tag"></i>
+              اسم الباقة <span class="required-star">*</span>
+            </label>
+            <input
+              type="text"
+              id="packageTitle"
+              name="title"
+              class="modal-input"
+              placeholder="مثال: الباقة الذهبية"
+              required
+              aria-required="true"
+            />
+            <span class="modal-error" role="alert"></span>
+          </div>
+
+          <div class="modal-field">
+            <label for="packagePrice" class="modal-label">
+              <i class="fa-solid fa-dollar-sign"></i>
+              السعر (بالجنيه المصري) <span class="required-star">*</span>
+            </label>
+            <input
+              type="number"
+              id="packagePrice"
+              name="price"
+              class="modal-input"
+              placeholder="مثال: 1500"
+              min="0"
+              required
+              aria-required="true"
+            />
+            <span class="modal-error" role="alert"></span>
+          </div>
+        </div>
+
+        <!-- Features List -->
+        <div class="modal-field">
+          <label class="modal-label">
+            <i class="fa-solid fa-list-check"></i>
+            مميزات الباقة <span class="required-star">*</span>
+          </label>
+          <div id="featuresContainer" class="features-container">
+            <!-- Feature inputs added dynamically -->
+            <div class="feature-row">
+              <input
+                type="text"
+                name="features[]"
+                class="modal-input feature-input"
+                placeholder="أدخل ميزة من مميزات الباقة..."
+                aria-label="ميزة الباقة 1"
+              />
+              <button type="button" class="feature-remove-btn" aria-label="حذف هذه الميزة">
+                <i class="fa-solid fa-minus"></i>
+              </button>
+            </div>
+          </div>
+          <button type="button" id="addFeatureBtn" class="add-feature-btn">
+            <i class="fa-solid fa-plus"></i>
+            إضافة ميزة أخرى
+          </button>
+        </div>
+
+        <!-- Recommended Toggle -->
+        <div class="modal-field">
+          <label class="modal-label">
+            <i class="fa-solid fa-star"></i>
+            وضع الباقة
+          </label>
+          <label class="toggle-switch" for="packageRecommended">
+            <input
+              type="checkbox"
+              id="packageRecommended"
+              name="is_recommended"
+              class="toggle-input"
+              aria-label="تحديد كباقة موصى بها"
+            />
+            <span class="toggle-track">
+              <span class="toggle-thumb"></span>
+            </span>
+            <span class="toggle-label">الباقة الأكثر طلباً (Recommended)</span>
+          </label>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="modal-cancel-btn" data-close-modal="packageModal">إلغاء</button>
+          <button type="submit" class="modal-save-btn" id="packageSubmitBtn">
+            <span class="msb-text">حفظ الباقة</span>
+            <div class="msb-loader" style="display:none;"><div class="mini-spinner"></div></div>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL: View Inquiry Details
+  ============================================================ -->
+  <div id="inquiryModal" class="admin-modal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="inquiryModalTitle">
+    <div class="modal-overlay" data-close-modal="inquiryModal"></div>
+    <div class="modal-box glass">
+      <div class="modal-header">
+        <h3 class="modal-title" id="inquiryModalTitle">تفاصيل الاستفسار</h3>
+        <button class="modal-close-btn" data-close-modal="inquiryModal" aria-label="إغلاق">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div id="inquiryDetailContent" class="inquiry-detail" aria-live="polite">
+        <!-- Populated dynamically by JS -->
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="modal-cancel-btn" data-close-modal="inquiryModal">إغلاق</button>
+        <a id="inquiryWhatsAppReply" href="#" target="_blank" rel="noopener" class="modal-save-btn wa-reply-btn">
+          <i class="fa-brands fa-whatsapp"></i>
+          <span>رد عبر واتساب</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       CONFIRM DELETE MODAL
+  ============================================================ -->
+  <div id="deleteModal" class="admin-modal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+    <div class="modal-overlay" data-close-modal="deleteModal"></div>
+    <div class="modal-box modal-box-sm glass">
+      <div class="modal-header">
+        <h3 class="modal-title delete-modal-title" id="deleteModalTitle">
+          <i class="fa-solid fa-triangle-exclamation" style="color:#ef4444"></i>
+          تأكيد الحذف
+        </h3>
+        <button class="modal-close-btn" data-close-modal="deleteModal" aria-label="إغلاق">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="delete-modal-body">
+        <p id="deleteModalMessage">هل أنت متأكد من رغبتك في حذف هذا العنصر؟ لا يمكن التراجع عن هذه العملية.</p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="modal-cancel-btn" data-close-modal="deleteModal">إلغاء</button>
+        <button type="button" class="modal-delete-btn" id="confirmDeleteBtn">
+          <i class="fa-solid fa-trash"></i>
+          <span>حذف نهائياً</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       GLOBAL TOAST NOTIFICATION
+  ============================================================ -->
+  <div id="toastContainer" class="toast-container" role="status" aria-live="polite" aria-atomic="true">
+    <!-- Toasts injected dynamically -->
+  </div>
+
+  <!-- Admin Script -->
+  <script src="../assets/js/admin.js"></script>
+</body>
+</html>
